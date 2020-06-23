@@ -9,16 +9,17 @@ import javax.persistence.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Entity(name = "patients")
 public class Patient {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name = "name")
+    @Column
     private String name;
-    @Column(name = "last_name")
+    @Column
     private String last_name;
-    @Column(name = "pesel")
+    @Column
     private String pesel;
-    @Column(name = "adress")
+    @Column
     private String adress;
 }

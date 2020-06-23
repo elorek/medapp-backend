@@ -12,11 +12,12 @@ import javax.persistence.*;
 @Entity(name = "doctors")
 public class Doctor {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name = "name")
+    @Column
     private String name;
-    @Column(name = "last_name")
+    @Column
     private String last_name;
-    @Column(name = "specialization")
+    @Column
     private String specialization;
 }

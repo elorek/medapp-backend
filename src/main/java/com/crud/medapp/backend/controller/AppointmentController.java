@@ -3,28 +3,38 @@ package com.crud.medapp.backend.controller;
 import com.crud.medapp.backend.domain.AppointmentDto;
 import com.crud.medapp.backend.domain.Doctor;
 import com.crud.medapp.backend.domain.Patient;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import com.crud.medapp.backend.mapper.AppointmentMapper;
+import com.crud.medapp.backend.service.DatabaseService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RestController
 @RequestMapping("/v1/appointment")
 public class AppointmentController {
-    @RequestMapping(method = RequestMethod.POST, value = "createAppointment")
-    public void createAppointment(AppointmentDto appointmentDto) {}
+    @Autowired
+    private DatabaseService databaseService;
+    @Autowired
+    private AppointmentMapper appointmentMapper;
+
+    @RequestMapping(method = RequestMethod.POST, value = "createAppointment", consumes = APPLICATION_JSON_VALUE)
+    public void createAppointment(@RequestBody AppointmentDto appointmentDto) {
+        databaseService.saveAppointment(appointmentMapper.mapToAppointment(appointmentDto));
+    }
 
     @RequestMapping(method = RequestMethod.GET, value = "getAppointment")
-    public AppointmentDto getAppointment(Long appointmentId) {
-        return new AppointmentDto(1L, 12, 5, 2020, 6, 25, 15, 30,
-                "Testowa 1, Testowo", 18);
+    public AppointmentDto getAppointment(@RequestParam Long appointmentId) throws AppointmentNotFoundException {
+        return appointmentMapper.mapToAppointmentDto(databaseService.getAppointment(appointmentId)
+                .orElseThrow(AppointmentNotFoundException::new));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getAppointments")
     public List<AppointmentDto> getAppointments() {
-        return new ArrayList<>();
+        return appointmentMapper.mapToAppointmentDtoList(databaseService.getAllAppointments());
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getAppointmentsByDoctor")
@@ -38,11 +48,12 @@ public class AppointmentController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "updateAppointment")
-    public AppointmentDto updateAppointment(AppointmentDto appointmentDto) {
-        return new AppointmentDto(1L, 12, 5, 2020, 6, 30, 13, 15,
-                "Testowa 1, Testowo", 5);
+    public AppointmentDto updateAppointment(@RequestBody AppointmentDto appointmentDto) {
+        return appointmentMapper.mapToAppointmentDto(databaseService.saveAppointment(appointmentMapper.mapToAppointment(appointmentDto)));
     }
 
     @RequestMapping(method = RequestMethod.DELETE,value = "deleteAppointment")
-    public void deleteAppointment(Long appointmentId) {}
+    public void deleteAppointment(@RequestParam Long appointmentId) {
+        databaseService.deleteAppointment(appointmentId);
+    }
 }

@@ -11,16 +11,17 @@ import java.time.LocalDateTime;
 @Entity(name = "appointments")
 public class Appointment {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name = "patient_id")
+    @Column
     private int patient_id;
-    @Column(name = "doctor_id")
+    @Column
     private int doctor_id;
     @Column(name = "time")
     private LocalDateTime when;
     @Column(name = "place")
     private String where;
-    @Column(name = "room")
+    @Column
     private int room;
 
     public Appointment(Long id, int patient_id, int doctor_id, int year, int month, int day, int hour, int minute,

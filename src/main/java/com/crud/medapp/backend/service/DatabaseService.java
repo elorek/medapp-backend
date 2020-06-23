@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DatabaseService {
@@ -30,5 +31,41 @@ public class DatabaseService {
 
     public List<Patient> getAllPatients() {
         return patientRepository.findAll();
+    }
+
+    public Optional<Appointment> getAppointment(final Long id) {
+        return appointmentRepository.findById(id);
+    }
+
+    public Optional<Doctor> getDoctor(final Long id) {
+        return doctorRepository.findById(id);
+    }
+
+    public Optional<Patient> getPatient(final Long id) {
+        return patientRepository.findById(id);
+    }
+
+    public Appointment saveAppointment(final Appointment appointment) {
+        return appointmentRepository.save(appointment);
+    }
+
+    public Doctor saveDoctor(final Doctor doctor) {
+        return doctorRepository.save(doctor);
+    }
+
+    public Patient savePatient(final Patient patient) {
+        return patientRepository.save(patient);
+    }
+
+    public void deleteAppointment(final Long id) {
+        appointmentRepository.deleteById(id);
+    }
+
+    public void deleteDoctor(final Long id) {
+        doctorRepository.deleteById(id);
+    }
+
+    public void deletePatient(final Long id) {
+        patientRepository.deleteById(id);
     }
 }
