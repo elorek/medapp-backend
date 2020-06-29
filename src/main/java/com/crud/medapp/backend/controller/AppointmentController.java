@@ -8,7 +8,6 @@ import com.crud.medapp.backend.service.DatabaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -29,7 +28,7 @@ public class AppointmentController {
     @RequestMapping(method = RequestMethod.GET, value = "getAppointment")
     public AppointmentDto getAppointment(@RequestParam Long appointmentId) throws AppointmentNotFoundException {
         return appointmentMapper.mapToAppointmentDto(databaseService.getAppointment(appointmentId)
-                .orElseThrow(AppointmentNotFoundException::new));
+        .orElseThrow(AppointmentNotFoundException::new));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getAppointments")
@@ -38,13 +37,13 @@ public class AppointmentController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getAppointmentsByDoctor")
-    public List<AppointmentDto> getAppointmentsByDoctor(Doctor doctor) {
-        return new ArrayList<>();
+    public List<AppointmentDto> getAppointmentsByDoctor(Long doctor_id) {
+        return appointmentMapper.mapToAppointmentDtoList(databaseService.getAppointmentsByDoctor(doctor_id));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getAppointmentsByPatient")
-    public List<AppointmentDto> getAppointmentsByPatient(Patient patient) {
-        return new ArrayList<>();
+    public List<AppointmentDto> getAppointmentsByPatient(Long patient_id) {
+        return appointmentMapper.mapToAppointmentDtoList(databaseService.getAppointmentsByPatient(patient_id));
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "updateAppointment")

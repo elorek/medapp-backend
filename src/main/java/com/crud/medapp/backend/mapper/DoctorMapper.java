@@ -10,15 +10,17 @@ import java.util.stream.Collectors;
 @Component
 public class DoctorMapper {
     public Doctor mapToDoctor(final DoctorDto doctorDto) {
-        return new Doctor(doctorDto.getId(), doctorDto.getName(), doctorDto.getLast_name(), doctorDto.getSpecialization());
+        return new Doctor(doctorDto.getId(), doctorDto.getName(), doctorDto.getLast_name(), doctorDto.getSpecialization(),
+                doctorDto.getAppointments());
     }
 
     public DoctorDto mapToDoctorDto(final Doctor doctor) {
-        return new DoctorDto(doctor.getId(), doctor.getName(), doctor.getLast_name(), doctor.getSpecialization());
+        return new DoctorDto(doctor.getId(), doctor.getName(), doctor.getLast_name(), doctor.getSpecialization(),
+                doctor.getAppointments());
     }
 
     public List<DoctorDto> mapToDoctorDtoList(final List<Doctor> doctorList) {
-        return doctorList.stream().map(d -> new DoctorDto(d.getId(), d.getName(), d.getLast_name(), d.getSpecialization()))
-                .collect(Collectors.toList());
+        return doctorList.stream().map(d -> new DoctorDto(d.getId(), d.getName(), d.getLast_name(), d.getSpecialization(),
+                d.getAppointments())).collect(Collectors.toList());
     }
 }

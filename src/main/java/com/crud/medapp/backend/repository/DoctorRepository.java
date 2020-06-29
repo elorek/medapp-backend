@@ -13,6 +13,8 @@ public interface DoctorRepository extends CrudRepository<Doctor, Long> {
     @Override
     Optional<Doctor> findById(Long id);
 
+    List<Doctor> findBySpecialization(String specialization);
+
     @Override
     Doctor save(Doctor doctor);
 

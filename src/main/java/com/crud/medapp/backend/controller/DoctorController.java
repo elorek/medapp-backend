@@ -1,5 +1,6 @@
 package com.crud.medapp.backend.controller;
 
+import com.crud.medapp.backend.domain.Doctor;
 import com.crud.medapp.backend.domain.DoctorDto;
 import com.crud.medapp.backend.mapper.DoctorMapper;
 import com.crud.medapp.backend.service.DatabaseService;
@@ -26,6 +27,11 @@ public class DoctorController {
     @RequestMapping(method = RequestMethod.GET, value = "getDoctor")
     public DoctorDto getDoctor(@RequestParam Long doctorId) throws DoctorNotFoundException {
         return doctorMapper.mapToDoctorDto(databaseService.getDoctor(doctorId).orElseThrow(DoctorNotFoundException::new));
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "getDoctorsBySpecialization")
+    public List<DoctorDto> getDoctorsBySpecialization(@RequestParam String specialization) {
+        return doctorMapper.mapToDoctorDtoList(databaseService.getDoctorsBySpecialization(specialization));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getDoctors")

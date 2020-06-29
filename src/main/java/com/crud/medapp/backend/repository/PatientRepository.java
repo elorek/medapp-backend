@@ -1,5 +1,6 @@
 package com.crud.medapp.backend.repository;
 
+import com.crud.medapp.backend.domain.Doctor;
 import com.crud.medapp.backend.domain.Patient;
 import org.springframework.data.repository.CrudRepository;
 
@@ -12,6 +13,8 @@ public interface PatientRepository extends CrudRepository<Patient, Long> {
 
     @Override
     Optional<Patient> findById(Long id);
+
+    List<Patient> findByDoctor(Doctor doctor);
 
     @Override
     Patient save(Patient patient);
